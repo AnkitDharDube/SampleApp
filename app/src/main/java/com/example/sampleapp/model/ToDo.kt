@@ -1,4 +1,4 @@
-package com.example.sampleapp.data
+package com.example.sampleapp.model
 
 data class ToDo(val id: String,
                 val userId: String,
