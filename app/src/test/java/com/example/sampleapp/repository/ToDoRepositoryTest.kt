@@ -3,6 +3,7 @@ package com.example.sampleapp.repository
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.example.sampleapp.datasource.RemoteDataSource
 import com.example.sampleapp.model.ToDo
+import com.example.sampleapp.networking.SampleService
 import com.example.sampleapp.utils.MainCoroutineRule
 import io.mockk.MockKAnnotations
 import io.mockk.clearAllMocks
@@ -19,6 +20,8 @@ import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.ResponseBody
 import okhttp3.ResponseBody.Companion.toResponseBody
 import org.junit.After
+import org.junit.Assert
+import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -65,5 +68,22 @@ class ToDoRepositoryTest {
         }
 
 
+    }
+
+    @Test
+    fun `mock API interface to test remote data source`() = runTest {
+
+        val sampleService : SampleService = mockk(relaxed = true)
+        val remoteDataSource= RemoteDataSource(sampleService)
+        // Mock API Service
+        val toDo = ToDo("1", "User1", "HomeFun",false)
+        val response: Response<List<ToDo>> = Response.success(200, listOf(toDo))
+        coEvery {
+        sampleService.getToDos()
+        }returns response
+        // Test
+        val responseAPI = remoteDataSource.getToDo()
+        // Verify
+        assertEquals(response,responseAPI)
     }
 }
