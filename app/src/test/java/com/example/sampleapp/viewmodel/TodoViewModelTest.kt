@@ -44,7 +44,7 @@ class TodoViewModelTest {
     }
 
     @Test
-    fun `should emit error object when api response error`() = runTest {
+    fun `should emit same object as api response `() = runTest {
         val result = NetworkResult.Sucesss(emptyList<ToDo>())
         coEvery {
             toDoRepository.getToDo()
