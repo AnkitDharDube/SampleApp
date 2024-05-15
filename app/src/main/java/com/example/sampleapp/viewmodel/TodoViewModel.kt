@@ -15,7 +15,6 @@ import javax.inject.Inject
 class TodoViewModel @Inject constructor(private val repository: ToDoRepository): ViewModel() {
     private var _todo : MutableLiveData<NetworkResult<List<ToDo>>> = MutableLiveData()
     val todo : LiveData<NetworkResult<List<ToDo>>> = _todo
-    val message = MutableLiveData<String>()
 
     fun fetchToDo(){
         viewModelScope.launch {
